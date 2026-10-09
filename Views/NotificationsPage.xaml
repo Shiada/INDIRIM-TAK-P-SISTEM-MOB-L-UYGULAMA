@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Indirimci.Views.NotificationsPage"
+             Title="Bildirimler"
+             BackgroundColor="{StaticResource BgPrimary}"
+             Shell.BackgroundColor="{StaticResource BgPrimary}">
+
+    <Grid>
+        <CollectionView x:Name="NotificationsCV" Margin="16,8">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="12" CornerRadius="12" HasShadow="False" Margin="0,4"
+                           BackgroundColor="{StaticResource BgCard}"
+                           BorderColor="{StaticResource BorderColor}">
+                        <Grid ColumnDefinitions="44,*" ColumnSpacing="12">
+                            <!-- Notification Icon -->
+                            <Frame Grid.Column="0" WidthRequest="44" HeightRequest="44" CornerRadius="22" Padding="0" HasShadow="False" BackgroundColor="{Binding BrandColorStart}">
+                                <Label Text="{Binding Icon}" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Frame>
+                            <!-- Notification Content -->
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold" TextColor="White" />
+                                <Label Text="{Binding Description}" FontSize="12" TextColor="{StaticResource TextSecondary}" MaxLines="2" LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding Time}" FontSize="11" TextColor="{StaticResource TextMuted}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="32" Spacing="8" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="🔔" FontSize="48" HorizontalTextAlignment="Center" />
+                    <Label Text="Bildirim yok" FontSize="18" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center" />
+                    <Label Text="Markaları takip ederek indirim bildirimlerini al!" FontSize="14" TextColor="{StaticResource TextSecondary}" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
+</ContentPage>

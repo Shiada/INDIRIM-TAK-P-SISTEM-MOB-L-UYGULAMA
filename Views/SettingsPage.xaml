@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Indirimci.Views.SettingsPage"
+             Title="Tercihler"
+             BackgroundColor="{StaticResource BgPrimary}"
+             Shell.BackgroundColor="{StaticResource BgPrimary}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+            <Label Text="Bildirim Tercihleri" Style="{StaticResource SectionTitle}" />
+            <Label Text="Hangi markalardan ve kategorilerden bildirim almak istediğini seç" FontSize="13" TextColor="{StaticResource TextSecondary}" Margin="16,0,16,16" />
+
+            <VerticalStackLayout x:Name="BrandsSettingsList" Spacing="8" Padding="16,0" />
+
+            <BoxView HeightRequest="20" Color="Transparent" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

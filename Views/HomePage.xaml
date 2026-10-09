@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Indirimci.Views.HomePage"
+             Title="İndirimci"
+             BackgroundColor="{StaticResource BgPrimary}"
+             Shell.BackgroundColor="{StaticResource BgPrimary}"
+             Shell.ForegroundColor="{StaticResource AccentPrimary}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <!-- Hero Section -->
+            <Grid Padding="20,24,20,20">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#1a0a2e" Offset="0" />
+                        <GradientStop Color="#16213e" Offset="1" />
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Merhaba! 👋" FontSize="28" FontAttributes="Bold" TextColor="White" />
+                    <Label Text="Favori markalarındaki fırsatları yakala" FontSize="15" TextColor="{StaticResource TextSecondary}" />
+
+                    <!-- Stats Row -->
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="0,16,0,0">
+                        <Frame Grid.Column="0" Style="{StaticResource CardFrame}" Padding="12">
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                                <Label x:Name="LblActiveDealCount" Text="16" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource AccentPrimary}" HorizontalTextAlignment="Center" />
+                                <Label Text="Aktif İndirim" FontSize="11" TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame Grid.Column="1" Style="{StaticResource CardFrame}" Padding="12">
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                                <Label x:Name="LblTrackedBrandCount" Text="0" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource AccentPrimary}" HorizontalTextAlignment="Center" />
+                                <Label Text="Takip Edilen" FontSize="11" TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame Grid.Column="2" Style="{StaticResource CardFrame}" Padding="12">
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                                <Label x:Name="LblNewDealCount" Text="4" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource AccentPrimary}" HorizontalTextAlignment="Center" />
+                                <Label Text="Yeni Fırsat" FontSize="11" TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Categories Section -->
+            <Label Text="Kategoriler" Style="{StaticResource SectionTitle}" />
+            <FlexLayout x:Name="CategoriesLayout" Wrap="Wrap" JustifyContent="SpaceEvenly" Padding="8,0" />
+
+            <!-- Trending Deals Section -->
+            <Grid Padding="16,16,16,4">
+                <Label Text="🔥 Günün Fırsatları" FontSize="20" FontAttributes="Bold" TextColor="White" VerticalOptions="Center" />
+            </Grid>
+            <CollectionView x:Name="TrendingDealsCV"
+                            HeightRequest="220"
+                            ItemsLayout="HorizontalList"
+                            Margin="8,0,0,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="0" CornerRadius="16" BackgroundColor="{StaticResource BgCard}" BorderColor="{StaticResource BorderColor}" HasShadow="False" Margin="8,4" WidthRequest="260">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnDealTapped" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                            <Grid RowDefinitions="120,Auto">
+                                <!-- Deal Header Color -->
+                                <BoxView Grid.Row="0" Color="{Binding BrandColorStart}" CornerRadius="16,16,0,0" />
+                                <Label Grid.Row="0" Text="{Binding Icon}" FontSize="36" HorizontalOptions="Center" VerticalOptions="Center" />
+                                <Frame Grid.Row="0" BackgroundColor="{StaticResource AccentPrimary}" CornerRadius="8" Padding="8,4" HasShadow="False" HorizontalOptions="Start" VerticalOptions="Start" Margin="10,10,0,0">
+                                    <Label Text="{Binding Discount}" FontSize="12" FontAttributes="Bold" TextColor="White" />
+                                </Frame>
+                                <!-- Deal Info -->
+                                <VerticalStackLayout Grid.Row="1" Padding="12,10" Spacing="4">
+                                    <Label Text="{Binding BrandName}" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource AccentPrimary}" TextTransform="Uppercase" />
+                                    <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold" TextColor="White" LineBreakMode="TailTruncation" MaxLines="2" />
+                                    <Label Text="{Binding TimeAgo}" FontSize="11" TextColor="{StaticResource TextMuted}" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Popular Brands Section -->
+            <Grid Padding="16,16,16,4">
+                <Label Text="Popüler Markalar" FontSize="20" FontAttributes="Bold" TextColor="White" VerticalOptions="Center" />
+                <Button Text="Tümü" Style="{StaticResource ChipButton}" HorizontalOptions="End" VerticalOptions="Center" Clicked="OnSeeAllBrandsClicked" />
+            </Grid>
+            <CollectionView x:Name="PopularBrandsCV"
+                            HeightRequest="160"
+                            ItemsLayout="HorizontalList"
+                            Margin="8,0,0,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="16" CornerRadius="16" BackgroundColor="{StaticResource BgCard}" BorderColor="{StaticResource BorderColor}" HasShadow="False" Margin="8,4" WidthRequest="140">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnBrandTapped" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+                                <!-- Brand Logo -->
+                                <Frame WidthRequest="56" HeightRequest="56" CornerRadius="12" Padding="0" HasShadow="False" BackgroundColor="{Binding GradientStart}" HorizontalOptions="Center">
+                                    <Label Text="{Binding LogoText}" FontSize="14" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Frame>
+                                <Label Text="{Binding Name}" FontSize="14" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding ActiveDealCount, StringFormat='{0} indirim'}" FontSize="11" TextColor="{StaticResource TextMuted}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- New Deals Section -->
+            <Label Text="⚡ Yeni İndirimler" Style="{StaticResource SectionTitle}" />
+            <CollectionView x:Name="NewDealsCV" Margin="16,0" ItemSizingStrategy="MeasureAllItems">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="12" CornerRadius="16" BackgroundColor="{StaticResource BgCard}" BorderColor="{StaticResource BorderColor}" HasShadow="False" Margin="0,4">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnDealTapped" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                            <Grid ColumnDefinitions="60,*" ColumnSpacing="12">
+                                <!-- Deal Thumb -->
+                                <Frame Grid.Column="0" WidthRequest="60" HeightRequest="60" CornerRadius="12" Padding="0" HasShadow="False" BackgroundColor="{Binding BrandColorStart}">
+                                    <Label Text="{Binding Icon}" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Frame>
+                                <!-- Deal Info -->
+                                <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                    <Label Text="{Binding BrandName}" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource AccentPrimary}" TextTransform="Uppercase" />
+                                    <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold" TextColor="White" LineBreakMode="TailTruncation" />
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Grid.Column="0" Text="{Binding Discount}" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource GreenAccent}" />
+                                        <Label Grid.Column="1" Text="{Binding TimeAgo}" FontSize="11" TextColor="{StaticResource TextMuted}" />
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Bottom spacer -->
+            <BoxView HeightRequest="20" Color="Transparent" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
